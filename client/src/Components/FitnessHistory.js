@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import FitnessForm from './FitnessForm';
 import './FitnessHistory.css';
+import { useNavigate } from 'react-router-dom';
 
 function FitnessHistory() {
-
+    const navigate = useNavigate()
     const [records, setRecords] = useState([{date:'09.04.2024', duration: '60', workoutType: 'Running', intensity: 'medium'}]);
 
-    const handleAddRecord = (record) => {
-        setRecords([...records, record]);
+    const handleAddActivity = () => {
+        navigate('/add-activity');
     };
 
     const onDelete = (index) => {
@@ -18,7 +18,6 @@ function FitnessHistory() {
 
     const onEdit = (index) => {
         // Implement the update logic here
-        // For example, you can open a modal to update the record
     };
 
     return (
@@ -26,7 +25,7 @@ function FitnessHistory() {
             <div className='ActivityHeader'>
                 <h2>Your Activities</h2>
                 <div className='addButton'>
-                    <button onClick= { <FitnessForm onSubmit={handleAddRecord} /> } >
+                    <button onClick= { handleAddActivity } >
                         Add Activity
                     </button>
                 </div>

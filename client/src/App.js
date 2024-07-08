@@ -1,33 +1,54 @@
-import React, { useState } from 'react';
-import Layout from './Components/Layout';
-import SignIn from './Components/SignIn';
-import FitnessForm from './Components/FitnessForm';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Layout from './Layout';
+import Login from './Components/Login';
+import Registration from './Components/Registration';
 import FitnessHistory from './Components/FitnessHistory';
-import './App.css';
+import FitnessForm from './Components/FitnessForm';
+import './App.css'
 
 function App() {
-    const [user, setUser] = useState(null);
-    const [records, setRecords] = useState([{date:'09.04.2024', duration: '60', workoutType: 'Running', intensity: 'medium'}]);
-
-    const handleSignIn = (username) => {
-        setUser(username);
-    };
-
-    const handleSignOut = () => {
-        setUser(null);
-        setRecords([]);
-    };
-
-    // if (!user) {
-    //     return <SignIn onSignIn={handleSignIn} />;
-    // }
-
     return (
-        <Layout>
-            
-            {/* <FitnessHistory /> */}
-            <FitnessForm />
-        </Layout>
+        <Router>
+            <div>
+                <Routes>
+                    <Route exact 
+                        path="/" 
+                        element={
+                            <header>
+                                <h1>Fitness Tracker App</h1>
+                                <Login />
+                            </header>
+                        } 
+                    />
+                    <Route
+                        path="/register" 
+                        element={
+                            <header>
+                                <h1>Fitness Tracker App</h1>
+                                <Registration />
+                            </header>
+                        } 
+                    />
+                    <Route 
+                        path="/history" 
+                        element={
+                            <Layout> 
+                                <FitnessHistory />
+                            </Layout>
+                        } 
+                    />
+                    <Route 
+                        path="/add-activity" 
+                        element={
+                            <Layout>
+                                <FitnessForm />
+                            </Layout>
+                        } 
+                    />
+                </Routes>
+            </div>
+        </Router>
     );
 }
 

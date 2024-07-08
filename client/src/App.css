@@ -1,9 +1,9 @@
-.addButton {
-  display: flex;
-  justify-content: end;
-  button {
-    height: 40px;
+h1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px;
-    border-radius: 20px;
-  }
+    margin: 0;
+    background-color: #105ca9;
+    height: 80px;
 }
