@@ -1,0 +1,32 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #105ca9;
+    height: 80px;
+}
+
+.title {
+    margin: 10px;
+    font-weight: bolder;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 36px;
+    font-style: italic;
+}
+
+.signOutButton {
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    padding: 20px;
+    background-color: rgb(125, 229, 237);
+    overflow-y: auto
+}

@@ -1,0 +1,67 @@
+.ActivityHeader {
+    display: flex;
+    justify-content: space-between;
+    .addButton {
+        align-items: center;
+    }
+    button {
+        cursor: pointer;
+    }
+}
+
+.ActivityContainer {
+    background-color: antiquewhite;
+    padding: 5px 10px;
+    border-radius: 10px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.activityName {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: large;
+    font-weight: bold;
+    margin: 5px;
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.details span {
+    margin: 10px 15px 5px 5px;
+}
+
+.details .date {
+    margin-left: auto;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    visibility: hidden;
+    button {
+        font-weight: bold;
+        border-radius: 10px;
+        padding: 5px;
+    }
+}
+
+.ActivityContainer:hover .buttons {
+    visibility: visible;
+}
+
+.edit {
+    background-color: rgba(11, 173, 63, 0.534);
+}
+.delete {
+    background-color: rgba(205, 34, 34, 0.76);
+}
+
+

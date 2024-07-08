@@ -1,25 +1,34 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Layout from './Components/Layout';
+import SignIn from './Components/SignIn';
+import FitnessHistory from './Components/FitnessHistory';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [user, setUser] = useState(null);
+    const [records, setRecords] = useState([{date:'09.04.2024', duration: '60', workoutType: 'Running', intensity: 'medium'}]);
+
+    const handleSignIn = (username) => {
+        setUser(username);
+    };
+
+    const handleSignOut = () => {
+        setUser(null);
+        setRecords([]);
+    };
+
+    // if (!user) {
+    //     return <SignIn onSignIn={handleSignIn} />;
+    // }
+
+    return (
+        <Layout>
+            
+            <FitnessHistory
+                
+            />
+        </Layout>
+    );
 }
 
 export default App;
