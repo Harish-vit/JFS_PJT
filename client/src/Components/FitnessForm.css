@@ -1,0 +1,38 @@
+.RecordContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+    gap: 20px;
+    padding: 10px;
+    font-size: 60;
+    .Entry {
+        height: 40px;
+        font-size: large;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        border-radius: 5px;
+    }
+    .SubmitButton {
+        width: 40%;
+        margin: 0px auto;
+        height: 35px;
+        border-radius: 10px;
+        background-color: rgb(43, 38, 38);
+        color: aliceblue;
+        cursor: pointer;
+        transition: all 0.3s linear;
+        &:hover {
+            background-color: rgb(16, 105, 105);
+            box-shadow: 2px 2px 2px 2px rgb(0, 0, 0, 0.5);
+        }
+    }
+}
+
+

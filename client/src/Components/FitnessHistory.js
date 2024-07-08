@@ -26,7 +26,7 @@ function FitnessHistory() {
             <div className='ActivityHeader'>
                 <h2>Your Activities</h2>
                 <div className='addButton'>
-                    <button onClick={ <FitnessForm onSubmit={handleAddRecord} /> } >
+                    <button onClick= { <FitnessForm onSubmit={handleAddRecord} /> } >
                         Add Activity
                     </button>
                 </div>

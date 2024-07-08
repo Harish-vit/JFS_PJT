@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Layout from './Components/Layout';
 import SignIn from './Components/SignIn';
+import FitnessForm from './Components/FitnessForm';
 import FitnessHistory from './Components/FitnessHistory';
 import './App.css';
 
@@ -24,9 +25,8 @@ function App() {
     return (
         <Layout>
             
-            <FitnessHistory
-                
-            />
+            {/* <FitnessHistory /> */}
+            <FitnessForm />
         </Layout>
     );
 }
