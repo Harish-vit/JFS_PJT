@@ -1,26 +1,33 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import './Login.css';
 
-const Login = () => {
+const Login = ({ setToken }) => { // Accept setToken as a prop
     const navigate = useNavigate();
-    const [user, setUser] = useState({ email: '', password: '' });
+    const [user, setUser] = useState({ username: '', password: '' });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUser({ ...user, [name]: value });
     };
 
-    const handleSubmit = () => {
-        if (user.email && user.password) {
-            navigate('/history');
-        }
-    };
-
     const handleSignUp = () => {
         navigate('/register');
-      };
+    };
+
+    const login = async () => {
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/users/login`, user);
+            setToken(response.data.token); // Set the token in the App state
+            navigate('/history');
+        } catch (error) {
+            console.error('Login failed:', error.message);
+            alert('Login failed, please try again.');
+            setUser({});
+        }
+    };
 
     return (
         <div className="login-body">
@@ -34,12 +41,12 @@ const Login = () => {
                             <div className="login-form-relative">
                                 <input
                                     type="text"
-                                    id="login-sign-in-email"
+                                    id="login-sign-in-username"
                                     className="login-form-input"
-                                    name="email"
-                                    value={user.email}
+                                    name="username"
+                                    value={user.username}
                                     onChange={handleChange}
-                                    placeholder="Your email"
+                                    placeholder="Your username"
                                     autoComplete="username"
                                 />
                             </div>
@@ -59,14 +66,19 @@ const Login = () => {
                                 <button
                                     type="button"
                                     className="button"
-                                    onClick={handleSubmit}
+                                    onClick={login}
                                 >
                                     Login
                                 </button>
-                                <button className="button" onClick={handleSignUp}>Sign Up</button>
+                                <button
+                                    type="button"
+                                    className="button"
+                                    onClick={handleSignUp}
+                                >
+                                    Sign Up
+                                </button>
                             </div>
                         </form>
-                        
                     </div>
                 </div>
             </div>

@@ -1,19 +1,41 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Registration = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [age, setAge] = useState('');
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
     const [gender, setGender] = useState('');
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
-        navigate('/');
+        
+        const user = {
+            name,
+            email,
+            username,
+            password,
+            age,
+            height,
+            weight,
+            gender,
+        };
+
+        try {
+            console.log(user)
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/users/register`, user);
+            alert(response.data.message);
+            navigate('/'); // Redirect to login page or home page
+        } catch (error) {
+            console.error('Registration failed:', error.message);
+            alert('Registration failed, please try again.');
+        }
     };
 
     return (
@@ -35,6 +57,15 @@ const Registration = () => {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Username:
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
                     />
                 </label>

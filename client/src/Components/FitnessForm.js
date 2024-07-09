@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './FitnessForm.css';
 import { useNavigate } from 'react-router-dom';
 
-function FitnessForm({ onSubmit }) {
+function FitnessForm({ onSubmit, token }) {
     const [duration, setDuration] = useState('');
-    const [workoutType, setWorkoutType] = useState('');
+    const [activityName, setactivityName] = useState('');
     const [intensity, setIntensity] = useState('');
     const [date, setDate] = useState(new Date().toISOString().substring(0, 10));
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (duration && workoutType && intensity) {
-            onSubmit({ duration, workoutType, intensity, date });
-            navigate('/history');
+        if (duration && activityName && intensity) {
+            try {
+                const newActivity = { duration, activityName, intensity, date };
+                const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/users/addactivities`, newActivity, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                onSubmit(response.data.activity); // Assuming the server responds with the new activity
+                navigate('/history');
+            } catch (error) {
+                console.error('Error recording activity:', error.message);
+                alert('Error recording activity, please try again.');
+            }
         }
     };
 
@@ -33,7 +45,7 @@ function FitnessForm({ onSubmit }) {
                         value={duration}
                         onChange={(e) => setDuration(e.target.value)}
                     />
-                    <select className='Entry' value={workoutType} onChange={(e) => setWorkoutType(e.target.value)}>
+                    <select className='Entry' value={activityName} onChange={(e) => setactivityName(e.target.value)}>
                         <option value="" disabled>Select a workout type</option>
                         <option value="Running">Running</option>
                         <option value="Cycling">Cycling</option>

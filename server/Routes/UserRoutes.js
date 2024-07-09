@@ -99,7 +99,10 @@ userRoute.post('/addactivities', async (req, res) => {
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
+        console.log(decoded)
         const user = await User.findById(decoded.id);
+        console.log(user)
+        console.log(intensity)
         
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
@@ -120,11 +123,11 @@ userRoute.post('/addactivities', async (req, res) => {
 
         // Calculate total daily calorie needs based on intensity
         let calorieCalculation;
-        if (intensity === 'Slow') {
+        if (intensity === 'slow') {
             calorieCalculation = BMR * 1.2;
-        } else if (intensity === 'Medium') {
+        } else if (intensity === 'medium') {
             calorieCalculation = BMR * 1.55;
-        } else if (intensity === 'Intense') {
+        } else if (intensity === 'intense') {
             calorieCalculation = BMR * 1.9;
         } else {
             return res.status(400).json({ message: 'Invalid intensity' });
