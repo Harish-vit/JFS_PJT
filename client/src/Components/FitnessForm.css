@@ -3,8 +3,6 @@
     justify-content: center;
     align-items: flex-start;
 }
-
-
 form {
     display: flex;
     flex-direction: column;
@@ -16,21 +14,43 @@ form {
     .Entry {
         height: 40px;
         font-size: large;
+        border: 2px black solid;
         font-family: Georgia, 'Times New Roman', Times, serif;
         border-radius: 5px;
     }
-    .SubmitButton {
-        width: 40%;
-        margin: 0px auto;
-        height: 35px;
-        border-radius: 10px;
-        background-color: rgb(43, 38, 38);
-        color: aliceblue;
-        cursor: pointer;
-        transition: all 0.3s linear;
-        &:hover {
-            background-color: rgb(16, 105, 105);
-            box-shadow: 2px 2px 2px 2px rgb(0, 0, 0, 0.5);
+    span{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        .SubmitButton {
+            width: 40%;
+            font-size: 15px;
+            margin: 0px auto;
+            height: 35px;
+            border-radius: 10px;
+            background-color: rgba(15, 167, 43, 0.832);
+            color: aliceblue;
+            cursor: pointer;
+            transition: all 0.3s linear;
+            &:hover {
+                background-color: rgb(16, 105, 105);
+                box-shadow: 2px 2px 2px 2px rgb(0, 0, 0, 0.5);
+            }
+        }
+        .BackButton{
+            width: 40%;
+            font-size: 15px;
+            margin: 0px auto;
+            height: 35px;
+            border-radius: 10px;
+            background-color: rgb(133, 32, 32);
+            color: aliceblue;
+            cursor: pointer;
+            transition: all 0.3s linear;
+            &:hover {
+                background-color: rgb(16, 105, 105);
+                box-shadow: 2px 2px 2px 2px rgb(0, 0, 0, 0.5);
+            }
         }
     }
 }
