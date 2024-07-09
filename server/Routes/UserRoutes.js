@@ -66,7 +66,7 @@ userRoute.post('/login', async (req, res) => {
 
 // Get user activities
 userRoute.get('/activities', async (req, res) => {
-    const token = req.header('Authorization').replace('Bearer ', '');
+    const token = req.headers['authorization']?.split(" ")[1]
 
     if (!token) {
         return res.status(401).json({ message: 'No token, authorization denied' });
@@ -88,14 +88,14 @@ userRoute.get('/activities', async (req, res) => {
 });
 
 // Add activity to user
-userRoute.post('/activities', async (req, res) => {
-    const token = req.header('Authorization').replace('Bearer ', '');
+userRoute.post('/addactivities', async (req, res) => {
+    const token = req.headers['authorization']?.split(" ")[1]
 
     if (!token) {
         return res.status(401).json({ message: 'No token, authorization denied' });
     }
 
-    const { duration, intensity, activityName, calories, date } = req.body;
+    const { duration, intensity, activityName, date } = req.body;
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
@@ -105,7 +105,41 @@ userRoute.post('/activities', async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const newActivity = { duration, intensity, activityName, calories, date };
+        // User details for BMR calculation
+        const { weight, height, age, gender } = user;
+
+        // Calculate BMR based on gender
+        let BMR;
+        if (gender === 'male') {
+            BMR = 10 * weight + 6.25 * height - 5 * age + 5;
+        } else if (gender === 'female') {
+            BMR = 10 * weight + 6.25 * height - 5 * age - 161;
+        } else {
+            return res.status(400).json({ message: 'Invalid gender' });
+        }
+
+        // Calculate total daily calorie needs based on intensity
+        let calorieCalculation;
+        if (intensity === 'Slow') {
+            calorieCalculation = BMR * 1.2;
+        } else if (intensity === 'Medium') {
+            calorieCalculation = BMR * 1.55;
+        } else if (intensity === 'Intense') {
+            calorieCalculation = BMR * 1.9;
+        } else {
+            return res.status(400).json({ message: 'Invalid intensity' });
+        }
+
+        // Creating the new activity
+        const newActivity = {
+            duration,
+            intensity,
+            activityName,
+            calories: calorieCalculation,  // Added calorie calculation
+            date
+        };
+        
+        // Add the new activity to user's activities
         user.activities.push(newActivity);
         await user.save();
 
@@ -115,5 +149,6 @@ userRoute.post('/activities', async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+
 
 module.exports = userRoute;

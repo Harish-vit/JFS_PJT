@@ -1,7 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const userRoutes = require('./Routes/UserRoutes');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
@@ -11,7 +11,8 @@ connectDB();
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(express.json());
 app.use('/api/users', userRoutes);
 
 const PORT = process.env.PORT || 8000;
