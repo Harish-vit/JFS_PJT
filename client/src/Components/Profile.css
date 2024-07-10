@@ -1,34 +1,37 @@
-/* .profileContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: left;
-    margin: 0 auto;
-    padding: 20px;
-    max-width: 400px;
-    box-sizing: border-box;
-} */
-
 .profileContainer {
     display: flex;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     flex-direction: column;
-    padding: 20px;
+    align-items: center;
+    padding: 10px;
     background-image: url('../Images/profile_background.jpg');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size:cover;
     background-position: left;
-    overflow-y: auto;
 }
 
 .profileDetails {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 10px;
-    width: 100%;
+    background-color:rgba(147, 243, 227, 0.423);
+    box-shadow:none;
+    border-radius: 8px;
+    border: 10px;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content:right;
+    margin-left: 5%;
+    width: 30%;
 }
 
-.profileDetails label {
+.Values{
+    align-items: center ;
+    
+}
+
+.Labels {
     font-weight: bold;
+    margin-left: 0px;
+    align-items: center;
 }
 
 .profileDetails p {
@@ -40,10 +43,18 @@
 .profileDetails select {
     width: 100%;
     padding: 5px;
+    margin-right: 10px;
     box-sizing: border-box;
 }
 
-button {
-    margin-top: 10px;
-    padding: 5px 10px;
+.buttonContainer{
+    padding:20px;
+    button {
+        margin-top: 10px;
+        margin-left: 4px;
+        row-gap: 10px;
+        background-color: #2f9a87;
+        padding: 5px 10px;
+        
+    }
 }

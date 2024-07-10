@@ -79,31 +79,31 @@ function Profile({ token }) {
                     <h2>User Details</h2>
                     <div className='profileDetails' >
                         <p>
-                            <label>Name:</label>
-                            {isEditing ? <input type="text" name="name" value={formData.name} onChange={handleInputChange} /> : <span>{user.name}</span>}
+                            <label className='Labels'>Name:</label>
+                            {isEditing ? <input type="text" name="name" value={formData.name} onChange={handleInputChange} /> : <label>{user.name}</label>}
                         </p>
                         <p>
-                            <label>Age:</label>
-                            {isEditing ? <input type="number" name="age" value={formData.age} onChange={handleInputChange} /> : <span>{user.age}</span>}
+                            <label className='Labels'>Age:</label>
+                            {isEditing ? <input type="number" name="age" value={formData.age} onChange={handleInputChange} /> : <label>{user.age}</label>}
                         </p>
                         <p>
-                            <label>Username:</label>
-                            {isEditing ? <input type="text" name="username" value={formData.username} onChange={handleInputChange} /> : <span>{user.username}</span>}
+                            <label className='Labels'>Username:</label>
+                            {isEditing ? <input type="text" name="username" value={formData.username} onChange={handleInputChange} /> : <label>{user.username}</label>}
                         </p>
                         <p>
-                            <label>Email:</label>
-                            {isEditing ? <input type="email" name="email" value={formData.email} onChange={handleInputChange} /> : <span>{user.email}</span>}
+                            <label className='Labels'>Email:</label>
+                            {isEditing ? <input type="email" name="email" value={formData.email} onChange={handleInputChange} /> : <label>{user.email}</label>}
                         </p>
                         <p>
-                            <label>Height:</label>
-                            {isEditing ? <input type="number" name="height" value={formData.height} onChange={handleInputChange} /> : <span>{user.height}</span>}
+                            <label className='Labels'>Height:</label>
+                            {isEditing ? <input type="number" name="height" value={formData.height} onChange={handleInputChange} /> : <label>{user.height}</label>}
                         </p>
                         <p>
-                            <label>Weight:</label>
-                            {isEditing ? <input type="number" name="weight" value={formData.weight} onChange={handleInputChange} /> : <span>{user.weight}</span>}
+                            <label className='Labels'>Weight:</label>
+                            {isEditing ? <input type="number" name="weight" value={formData.weight} onChange={handleInputChange} /> : <label>{user.weight}</label>}
                         </p>
                         <p>
-                            <label>Gender:</label>
+                            <label className='Labels'>Gender:</label>
                             {isEditing ? (
                                 <select name="gender" value={formData.gender} onChange={handleInputChange}>
                                     <option value="" disabled>Select</option>
@@ -111,7 +111,7 @@ function Profile({ token }) {
                                     <option value="female">Female</option>
                                     <option value="other">Other</option>
                                 </select>
-                            ) : <span>{user.gender}</span>}
+                            ) : <label>{user.gender}</label>}
                         </p>
                     </div>
                     <div className='buttonContainer'>
