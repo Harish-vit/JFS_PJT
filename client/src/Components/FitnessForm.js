@@ -1,41 +1,75 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './FitnessForm.css';
 import { useNavigate } from 'react-router-dom';
 
-function FitnessForm({ onSubmit, token }) {
-    const [duration, setDuration] = useState('');
-    const [activityName, setactivityName] = useState('');
-    const [intensity, setIntensity] = useState('');
-    const [date, setDate] = useState(new Date().toISOString().substring(0, 10));
+function FitnessForm({ initialData, onSubmit, token, isEdit }) {
+    const [duration, setDuration] = useState(initialData?.duration || '');
+    const [activityName, setActivityName] = useState(initialData?.activityName || '');
+    const [intensity, setIntensity] = useState(initialData?.intensity || '');
+    const [date, setDate] = useState(initialData?.date ? initialData.date.substring(0, 10) : new Date().toISOString().substring(0, 10));
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (initialData) {
+            setDuration(initialData.duration);
+            setActivityName(initialData.activityName);
+            setIntensity(initialData.intensity);
+            setDate(initialData.date.substring(0, 10));
+        }
+    }, [initialData]);
+
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (duration && activityName && intensity) {
-            try {
-                const newActivity = { duration, activityName, intensity, date };
-                const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/users/addactivities`, newActivity, {
+        try {
+            if (!duration || !activityName || !intensity) {
+                throw new Error('Please fill in all fields.');
+            }
+    
+            const newActivity = { duration, activityName, intensity, date };
+            let response;
+            
+            if (isEdit) {
+                response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/users/activities/${initialData._id}`, newActivity, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                onSubmit(response.data.activity); // Assuming the server responds with the new activity
-                navigate('/history');
-            } catch (error) {
-                console.error('Error recording activity:', error.message);
-                alert('Error recording activity, please try again.');
+            } else {
+                response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/users/addactivities`, newActivity, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
             }
+    
+            console.log(response.data.activity);
+            navigate('/history');
+        } catch (error) {
+            console.error('Error recording activity:', error.message);
         }
     };
-
+    
+    
     const handleBack = () => {
         navigate('/history');
     };
 
+    const handleDateChange = (e) => {
+        const selectedDate = e.target.value;
+        const today = new Date().toISOString().substring(0, 10);
+        
+        if (selectedDate <= today) {
+            setDate(selectedDate);
+        } else {
+            alert('Please select a date not in the future.');
+        }
+    };
+
     return (
         <div>
-            <h2>Record Fitness Activity</h2>
+            <h2>{isEdit ? 'Edit Activity' : 'Record Fitness Activity'}</h2>
             <div className='RecordContainer'>
                 <form onSubmit={handleSubmit}>
                     <input
@@ -45,7 +79,7 @@ function FitnessForm({ onSubmit, token }) {
                         value={duration}
                         onChange={(e) => setDuration(e.target.value)}
                     />
-                    <select className='Entry' value={activityName} onChange={(e) => setactivityName(e.target.value)}>
+                    <select className='Entry' value={activityName} onChange={(e) => setActivityName(e.target.value)}>
                         <option value="" disabled>Select a workout type</option>
                         <option value="Running">Running</option>
                         <option value="Cycling">Cycling</option>
@@ -61,10 +95,11 @@ function FitnessForm({ onSubmit, token }) {
                         className='Entry'
                         type="date"
                         value={date}
-                        onChange={(e) => setDate(e.target.value)}
+                        onChange={handleDateChange}
+                        max={new Date().toISOString().substring(0, 10)} // Set max attribute to today's date
                     />
                     <span>
-                        <button type="submit" className='SubmitButton'>Submit</button>
+                        <button type="submit" className='SubmitButton'>{isEdit ? 'Update' : 'Submit'}</button>
                         <button type="button" className='BackButton' onClick={handleBack}>Back</button>
                     </span>
                 </form>

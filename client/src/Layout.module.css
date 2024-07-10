@@ -17,7 +17,6 @@
 
 .signOutButton {
     font-size: 16px;
-    padding: 5px 10px;
     border-radius: 10px;
     cursor: pointer;
 }
@@ -30,3 +29,19 @@
     background-color: rgb(125, 229, 237);
     overflow-y: auto
 }
+
+span{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+.profileButton {
+    background: none;
+    cursor: pointer;
+}
+
+.profileImage {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+} 

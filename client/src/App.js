@@ -1,19 +1,39 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Layout from './Layout';
 import Login from './Components/Login';
 import Registration from './Components/Registration';
 import FitnessHistory from './Components/FitnessHistory';
 import FitnessForm from './Components/FitnessForm';
+import EditActivity from './Components/EditActivity';
+import Profile from './Components/Profile';
 import './App.css';
 
 function App() {
-    const [activities, setActivities] = useState([]);
-    const [token, setToken] = useState(null); // State to store the token
+    const [token, setToken] = useState(localStorage.getItem('token')); // Retrieve token from localStorage
+    const [isLoggedIn, setIsLoggedIn] = useState(!!token); // Check if token exists
 
-    const handleFormSubmit = (newActivity) => {
-        setActivities((prevActivities) => [...prevActivities, newActivity]);
+    // Function to handle login and set token
+    const handleLogin = (token) => {
+        setToken(token);
+        setIsLoggedIn(true);
+        localStorage.setItem('token', token); // Store token in localStorage
     };
+
+    // Function to handle logout
+    const handleLogout = () => {
+        localStorage.removeItem('token'); // Remove token from localStorage
+        setToken(null);
+        setIsLoggedIn(false);
+    };
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
+            setToken(storedToken);
+            setIsLoggedIn(true);
+        }
+    }, []);
 
     return (
         <Router>
@@ -23,10 +43,14 @@ function App() {
                         exact
                         path="/"
                         element={
-                            <header>
-                                <h1>Fitness Tracker App</h1>
-                                <Login setToken={setToken} />
-                            </header>
+                            isLoggedIn ? (
+                                <Navigate to="/history" />
+                            ) : (
+                                <header>
+                                    <h1>Fitness Tracker App</h1>
+                                    <Login setToken={handleLogin} />
+                                </header>
+                            )
                         }
                     />
                     <Route
@@ -41,16 +65,32 @@ function App() {
                     <Route
                         path="/history"
                         element={
-                            <Layout>
-                                <FitnessHistory activities={activities} token={token} />
+                            <Layout onLogout={handleLogout}>
+                                <FitnessHistory token={token} />
                             </Layout>
                         }
                     />
                     <Route
                         path="/add-activity"
                         element={
-                            <Layout>
-                                <FitnessForm onSubmit={handleFormSubmit} token={token} />
+                            <Layout onLogout={handleLogout}>
+                                <FitnessForm token={token} />
+                            </Layout>
+                        }
+                    />
+                    <Route
+                        path="/profile"
+                        element={
+                            <Layout onLogout={handleLogout}>
+                                <Profile token={token} />
+                            </Layout>
+                        }
+                    />
+                    <Route
+                        path="/edit-activity/:id"
+                        element={
+                            <Layout onLogout={handleLogout}>
+                                <EditActivity token={token} />
                             </Layout>
                         }
                     />

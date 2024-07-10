@@ -8,6 +8,24 @@ const userRoute = express.Router();
 // JWT secret
 const JWT_SECRET = 'your_jwt_secret_key';
 
+// Middleware to authenticate JWT token
+const authenticateToken = (req, res, next) => {
+    const token = req.headers['authorization']?.split(" ")[1];
+
+    if (!token) {
+        return res.status(401).json({ message: 'No token, authorization denied' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        req.user = decoded; // Attach decoded user information to request object
+        next();
+    } catch (error) {
+        console.error('JWT verification error:', error.message);
+        return res.status(401).json({ message: 'Invalid token' });
+    }
+};
+
 // Register a new user
 userRoute.post('/register', async (req, res) => {
     const { name, age, username, password, email, height, weight, gender } = req.body;
@@ -64,18 +82,11 @@ userRoute.post('/login', async (req, res) => {
     }
 });
 
-// Get user activities
-userRoute.get('/activities', async (req, res) => {
-    const token = req.headers['authorization']?.split(" ")[1]
-
-    if (!token) {
-        return res.status(401).json({ message: 'No token, authorization denied' });
-    }
-
+// Get all user activities
+userRoute.get('/activities', authenticateToken, async (req, res) => {
     try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        const user = await User.findById(decoded.id).select('activities');
-        
+        const user = await User.findById(req.user.id).select('activities');
+
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -88,31 +99,20 @@ userRoute.get('/activities', async (req, res) => {
 });
 
 // Add activity to user
-userRoute.post('/addactivities', async (req, res) => {
-    const token = req.headers['authorization']?.split(" ")[1]
-
-    if (!token) {
-        return res.status(401).json({ message: 'No token, authorization denied' });
-    }
-
+userRoute.post('/addactivities', authenticateToken, async (req, res) => {
     const { duration, intensity, activityName, date } = req.body;
 
     try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        console.log(decoded)
-        const user = await User.findById(decoded.id);
-        console.log(user)
-        console.log(intensity)
+        const user = await User.findById(req.user.id);
         
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // User details for BMR calculation
+        // Calculate calories based on user details
         const { weight, height, age, gender } = user;
-
-        // Calculate BMR based on gender
         let BMR;
+
         if (gender === 'male') {
             BMR = 10 * weight + 6.25 * height - 5 * age + 5;
         } else if (gender === 'female') {
@@ -121,8 +121,8 @@ userRoute.post('/addactivities', async (req, res) => {
             return res.status(400).json({ message: 'Invalid gender' });
         }
 
-        // Calculate total daily calorie needs based on intensity
         let calorieCalculation;
+
         if (intensity === 'slow') {
             calorieCalculation = BMR * 1.2;
         } else if (intensity === 'medium') {
@@ -133,16 +133,14 @@ userRoute.post('/addactivities', async (req, res) => {
             return res.status(400).json({ message: 'Invalid intensity' });
         }
 
-        // Creating the new activity
+        // Create new activity
         const newActivity = {
             duration,
             intensity,
             activityName,
-            calories: calorieCalculation,  // Added calorie calculation
+            calories: calorieCalculation,
             date
         };
-        
-        // Add the new activity to user's activities
         user.activities.push(newActivity);
         await user.save();
 
@@ -153,5 +151,176 @@ userRoute.post('/addactivities', async (req, res) => {
     }
 });
 
+// Get single activity by ID
+userRoute.get('/activities/:id', authenticateToken, async (req, res) => {
+    const activityId = req.params.id;
+
+    try {
+        const user = await User.findById(req.user.id).select('activities');
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const activity = user.activities.id(activityId);
+
+        if (!activity) {
+            return res.status(404).json({ message: 'Activity not found' });
+        }
+
+        res.json(activity);
+    } catch (error) {
+        console.error('Error fetching activity:', error.message);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Update activity by ID
+userRoute.put('/activities/:id', authenticateToken, async (req, res) => {
+    const { duration, intensity, activityName } = req.body;
+    const activityId = req.params.id;
+
+    try {
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const activityToUpdate = user.activities.id(activityId);
+
+        if (!activityToUpdate) {
+            return res.status(404).json({ message: 'Activity not found' });
+        }
+
+        // Update activity fields
+        activityToUpdate.duration = duration;
+        activityToUpdate.intensity = intensity;
+        activityToUpdate.activityName = activityName;
+
+        await user.save();
+
+        res.json({ message: 'Activity updated successfully' });
+    } catch (error) {
+        console.error('Error updating activity:', error.message);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+userRoute.get('/details', authenticateToken, async (req, res) => {
+    try {
+        // Find the user by their ID, which was decoded from the JWT token
+        const user = await User.findById(req.user.id).select('-password -activities'); // Exclude password and activities
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Respond with user details
+        res.json(user);
+    } catch (error) {
+        console.error('Error fetching user details:', error.message);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+
+// Delete activity by ID
+userRoute.delete('/activities/:id', authenticateToken, async (req, res) => {
+    const activityId = req.params.id;
+
+    try {
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.activities = user.activities.filter(activity => activity._id != activityId);
+        await user.save();
+
+        res.json({ message: 'Activity deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting activity:', error.message);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Update user details
+userRoute.put('/details', authenticateToken, async (req, res) => {
+    const { name, age, username, email, height, weight, gender } = req.body;
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.name = name;
+        user.age = age;
+        user.username = username;
+        user.email = email;
+        user.height = height;
+        user.weight = weight;
+        user.gender = gender;
+
+        await user.save();
+        res.json(user);
+    } catch (error) {
+        console.error('Error updating user details:', error.message);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+userRoute.post('/activities/:id', authenticateToken, async (req, res) => {
+    const { duration, intensity, activityName, date } = req.body;
+    const activityId = req.params.id;
+
+    try {
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        let activityToUpdate = user.activities.id(activityId);
+
+        if (!activityToUpdate) {
+            // If activity does not exist, create a new one
+            activityToUpdate = {
+                duration,
+                intensity,
+                activityName,
+                date
+            };
+            user.activities.push(activityToUpdate);
+        } else {
+            // If activity exists, update it
+            activityToUpdate.duration = duration;
+            activityToUpdate.intensity = intensity;
+            activityToUpdate.activityName = activityName;
+            activityToUpdate.date = date;
+        }
+
+        await user.save();
+
+        res.json({ message: 'Activity saved successfully', activity: activityToUpdate });
+    } catch (error) {
+        console.error('Error saving activity:', error.message);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+userRoute.get('/details', authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password'); // Exclude password from response
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.json(user);
+    } catch (error) {
+        console.error('Error fetching user details:', error.message);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
 
 module.exports = userRoute;
