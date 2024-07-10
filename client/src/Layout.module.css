@@ -55,6 +55,7 @@ span {
 .profileButton {
     background: none;
     cursor: pointer;
+    border: 0px;
     &:hover {
         background: none;
     }

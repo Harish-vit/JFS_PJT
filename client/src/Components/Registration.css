@@ -1,53 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto+Slab:wght@100..900&display=swap');
+
 .register-container {
-    margin: auto;
-    text-align: center;
-    background-color: rgb(200, 250, 250);
-    h2 {
-        margin: 0px;
-    }
-    padding: 0px;
+    background-image: url("../Images/register-background.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .form-container {
     display: flex;
-    flex-direction: column;
-    background-color: rgb(228, 226, 226);
     justify-content: center;
-    align-items: center;
-    width: 50%;
-    margin: auto;
-    border-radius: 10px;
+    align-items: flex-start;
+    min-height: 70vh;
     padding: 20px;
+    box-sizing: border-box;
 }
 
-form {
-    width: 80%;
+.reg-title {
+    font-family: "Roboto Slab", serif;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    padding-top: 20px;
 }
 
-label {
+.form-content {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    background-color: antiquewhite;
     width: 100%;
-    margin-bottom: 10px;
+    max-width: 500px;
+    gap: 20px;
+    padding: 20px 20px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: larger;
+    .Entry {
+        height: 40px;
+        width: 100%;
+        font-size: large;
+        border: 2px black solid;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        border-radius: 5px;
+    }
+
+    .SubmitButton {
+        width: 100%;
+        max-width: 200px;
+        font-size: 15px;
+        height: 35px;
+        border-radius: 10px;
+        background-color: rgba(15, 167, 43, 0.832);
+        color: aliceblue;
+        cursor: pointer;
+        transition: all 0.3s linear;
+        align-self: center;
+
+        &:hover {
+            background-color: rgba(5, 158, 33, 0.832);
+            box-shadow: 2px 2px 2px 2px rgb(0, 0, 0, 0.5);
+        }
+    }
 }
 
-label input,
-label select {
-    width: 100px;
-    height: 30px;
-    margin-left: 20px;
-}
-
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: none;
-    background-color: #007bff;
-    color: white;
+.gender-entry {
+    height: 40px;
+    width: 100%;
+    font-size: large;
+    border: 2px black solid;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     border-radius: 5px;
-    cursor: pointer;
+    box-sizing: border-box;
 }
 
-button:hover {
-    background-color: #0056b3;
+.fitness-form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-image: url('../Images/fitness_background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .form-content {
+        padding: 20px;
+    }
+    
+    .Entry,
+    .gender-entry {
+        width: calc(100% - 40px); /* Adjust for padding */
+    }
+}
+
+@media (max-width: 480px) {
+    .reg-title {
+        font-size: 1.5rem;
+    }
+
+    .Entry,
+    .gender-entry {
+        width: calc(100% - 20px); /* Adjust for padding */
+    }
+
+    .SubmitButton {
+        width: 100%;
+        max-width: 150px;
+    }
 }

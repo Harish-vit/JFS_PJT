@@ -41,12 +41,13 @@ const Registration = () => {
 
     return (
         <div className='register-container'>
-            <h2>Register Here!!!</h2>
+            <h2 className='reg-title'>Register Here!!!</h2>
             <div className='form-container'>
-                <form onSubmit={handleRegister}>
+                <form className='form-content' onSubmit={handleRegister}>
                     <label>
                         Name:
                         <input
+                            className='Entry'
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
@@ -56,6 +57,7 @@ const Registration = () => {
                     <label>
                         Email:
                         <input
+                            className='Entry'
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -65,6 +67,7 @@ const Registration = () => {
                     <label>
                         Username:
                         <input
+                            className='Entry'
                             type="text"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
@@ -74,6 +77,7 @@ const Registration = () => {
                     <label>
                         Password:
                         <input
+                            className='Entry'
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -83,6 +87,7 @@ const Registration = () => {
                     <label>
                         Age:
                         <input
+                            className='Entry'
                             type="number"
                             value={age}
                             onChange={(e) => setAge(e.target.value)}
@@ -92,6 +97,7 @@ const Registration = () => {
                     <label>
                         Height (cm):
                         <input
+                            className='Entry'
                             type="number"
                             value={height}
                             onChange={(e) => setHeight(e.target.value)}
@@ -101,6 +107,7 @@ const Registration = () => {
                     <label>
                         Weight (kg):
                         <input
+                            className='Entry'
                             type="number"
                             value={weight}
                             onChange={(e) => setWeight(e.target.value)}
@@ -109,14 +116,14 @@ const Registration = () => {
                     </label>
                     <label>
                         Gender:
-                        <select value={gender} onChange={(e) => setGender(e.target.value)} required>
+                        <select className='gender-entry' value={gender} onChange={(e) => setGender(e.target.value)} required>
                             <option value="" disabled>Select</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                             <option value="other">Other</option>
                         </select>
                     </label>
-                    <button type="submit">Register</button>
+                    <button className='SubmitButton' type="submit">Register</button>
                 </form>
             </div>
         </div>

@@ -17,7 +17,7 @@ function EditActivity({ token }) {
                     }
                 });
                 setActivity(response.data);
-                alert('Success.')
+                // alert('Success.')
             } catch (error) {
                 console.error('Error fetching activity:', error.message);
                 alert('Error fetching activity, please try again.');
