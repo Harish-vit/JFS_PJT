@@ -68,8 +68,8 @@ function FitnessForm({ initialData, onSubmit, token, isEdit }) {
     };
 
     return (
-        <div>
-            <h2>{isEdit ? 'Edit Activity' : 'Record Fitness Activity'}</h2>
+        <div className='fitness-form'>
+            <h2 className='record-title'>{isEdit ? 'Edit Activity' : 'Record Fitness Activity'}</h2>
             <div className='RecordContainer'>
                 <form onSubmit={handleSubmit}>
                     <input
@@ -81,9 +81,11 @@ function FitnessForm({ initialData, onSubmit, token, isEdit }) {
                     />
                     <select className='Entry' value={activityName} onChange={(e) => setActivityName(e.target.value)}>
                         <option value="" disabled>Select a workout type</option>
-                        <option value="Running">Running</option>
-                        <option value="Cycling">Cycling</option>
-                        <option value="Swimming">Swimming</option>
+                        <option value="Cardio Workouts">Cardio Workouts</option>
+                        <option value="Strength Workouts">Strength Workouts</option>
+                        <option value="Flexibility and Balance">Flexibility and Balance</option>
+                        <option value="Sport-Specific Workouts">Sport-Specific Workouts</option>
+                        <option value="Outdoor Activities">Outdoor Activities</option>
                     </select>
                     <select className='Entry' value={intensity} onChange={(e) => setIntensity(e.target.value)}>
                         <option value="" disabled>Select an intensity</option>

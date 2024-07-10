@@ -47,7 +47,9 @@ function App() {
                                 <Navigate to="/history" />
                             ) : (
                                 <header>
-                                    <h1>Fitness Tracker App</h1>
+                                    <span className='log-header'>
+                                        <h1 className='log-title'>Log In to FitFocus Now!</h1>
+                                    </span>
                                     <Login setToken={handleLogin} />
                                 </header>
                             )
@@ -57,7 +59,10 @@ function App() {
                         path="/register"
                         element={
                             <header>
-                                <h1>Fitness Tracker App</h1>
+                                <span className='log-header'>
+                                    <h1 className='log-title'>Join FitFocus</h1>
+                                    <p className='log-quote'> ~ "Your Personalized Path to Fitness Awaits!"</p>
+                                </span>
                                 <Registration />
                             </header>
                         }

@@ -1,16 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto+Slab:wght@100..900&display=swap');
+
 .ActivityHeader {
     display: flex;
     justify-content: space-between;
+    font-family: "Roboto Slab", serif;
+    font-size: 22px;
+    font-style: normal;
     .addButton {
         align-items: center;
     }
     button {
         cursor: pointer;
+        border-radius: 0px 20px;
+        background-color: #95BDFF;
+        color: black;
+        width: 120px;
+        height: 40px;
+        border: 2px solid grey;
+        padding: 5px 10px;
+        margin: 20px;
+        font-family: "Playfair Display", serif;
+        font-size: 16px;
+        font-weight: 800;
+        font-style: normal;
+        transition: all 0.5s;
+        &:hover {
+            background-color: #86b3fb;
+            box-shadow: 1px 1px 2px 1px rgb(174, 171, 171);
+        }
     }
 }
 
 .ActivityContainer {
-    background-color: antiquewhite;
+    background-color: rgba(250, 235, 215, 0.76);
     padding: 5px 10px;
     border-radius: 10px;
     position: relative;
@@ -20,13 +43,16 @@
 .activityName {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: large;
-    font-weight: bold;
+    font-weight: bolder;
     margin: 5px;
 }
 
 .details {
     display: flex;
     justify-content: space-between;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .details span {
@@ -63,4 +89,22 @@
     background-color: rgba(205, 34, 34, 0.76);
 }
 
+.chart-container {
+    width: 100%;
+    max-width: 600px;
+    height: 300px;
+    margin: 0 auto 20px auto;
+    white-space: nowrap;
+}
 
+.fitness-history {
+    display: flex;
+    flex-direction: column;
+    /* height: 60px; */
+    padding: 20px;
+    background-image: url('../Images/fitness_background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    overflow-y: auto;
+}

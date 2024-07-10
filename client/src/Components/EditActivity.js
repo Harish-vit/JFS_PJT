@@ -38,7 +38,6 @@ function EditActivity({ token }) {
             navigate('/history');
         
     };
-    
 
     return (
         <div>

@@ -1,8 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto+Slab:wght@100..900&display=swap');
+
 .RecordContainer {
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    height: 70vh;
 }
+
+.record-title {
+    font-family: "Roboto Slab", serif;
+    font-size: 32px;
+    font-style: normal;
+    /* padding-left: 50px; */
+    text-align: center;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -33,7 +45,7 @@ form {
             cursor: pointer;
             transition: all 0.3s linear;
             &:hover {
-                background-color: rgb(16, 105, 105);
+                background-color: rgba(5, 158, 33, 0.832);
                 box-shadow: 2px 2px 2px 2px rgb(0, 0, 0, 0.5);
             }
         }
@@ -43,16 +55,26 @@ form {
             margin: 0px auto;
             height: 35px;
             border-radius: 10px;
-            background-color: rgb(133, 32, 32);
+            background-color: rgba(133, 32, 32, 0.728);
             color: aliceblue;
             cursor: pointer;
             transition: all 0.3s linear;
             &:hover {
-                background-color: rgb(16, 105, 105);
+                background-color: rgba(119, 29, 29, 0.728);
                 box-shadow: 2px 2px 2px 2px rgb(0, 0, 0, 0.5);
             }
         }
     }
 }
 
-
+.fitness-form {
+    display: flex;
+    flex-direction: column;
+    /* height: 60px; */
+    padding: 20px;
+    background-image: url('../Images/fitness_background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    overflow-y: auto;
+}

@@ -1,47 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+AU+TAS:wght@100..400&display=swap');
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #105ca9;
+    background-color: #95D2B3;
     height: 80px;
 }
 
 .title {
     margin: 10px;
+    font-family: "Playwrite AU TAS", cursive;
     font-weight: bolder;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 36px;
-    font-style: italic;
+    font-style: normal;
+    font-size: 52px;
+    padding-left: 15px;
 }
 
 .signOutButton {
     font-size: 16px;
     border-radius: 10px;
     cursor: pointer;
+    background-color: #007F73;
+    transition: all 0.5s;
+    &:hover {
+        background-color: #037065;
+        box-shadow: 2px 2px 2px 1px #6baf8d;
+    }
+    &:active {
+        border: 1px solid rgb(180, 173, 173);
+    }
 }
 
-.content {
+/* .content {
     display: flex;
-    flex-direction: column;
-    height: 80vh;
-    padding: 20px;
-    background-color: rgb(125, 229, 237);
-    overflow-y: auto
-}
+    flex-direction: column; */
+    /* height: 60px; */
+    /* padding: 20px;
+    background-image: url('./Images/fitness_background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    overflow-y: auto;
+} */
 
-span{
+span {
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
+    margin: 15px;
 }
+
 .profileButton {
     background: none;
     cursor: pointer;
+    &:hover {
+        background: none;
+    }
 }
 
 .profileImage {
     width: 35px;
     height: 35px;
     border-radius: 50%;
+    padding: 10px;
+    transition: all 0.5s;
+    &:hover {
+        box-shadow: 2px 2px 2px 1px #6baf8d;
+        padding: 15px;
+    }
+    &:active {
+        background-color: #6baf8d;
+        border: 1px solid rgb(180, 173, 173);
+    }
 } 

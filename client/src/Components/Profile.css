@@ -1,4 +1,4 @@
-.profileContainer {
+/* .profileContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,6 +7,17 @@
     padding: 20px;
     max-width: 400px;
     box-sizing: border-box;
+} */
+
+.profileContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-image: url('../Images/profile_background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
+    overflow-y: auto;
 }
 
 .profileDetails {

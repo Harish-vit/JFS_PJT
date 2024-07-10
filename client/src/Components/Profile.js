@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import styles from './Profile.css';
+import './Profile.css';
 
 function Profile({ token }) {
     const navigate = useNavigate();
@@ -73,11 +73,11 @@ function Profile({ token }) {
     };
 
     return (
-        <div className={styles.profileContainer}>
+        <div >
             {user && (
-                <div>
+                <div className='profileContainer'>
                     <h2>User Details</h2>
-                    <div className={styles.profileDetails}>
+                    <div className='profileDetails' >
                         <p>
                             <label>Name:</label>
                             {isEditing ? <input type="text" name="name" value={formData.name} onChange={handleInputChange} /> : <span>{user.name}</span>}
@@ -114,7 +114,7 @@ function Profile({ token }) {
                             ) : <span>{user.gender}</span>}
                         </p>
                     </div>
-                    <div className={styles.buttonContainer}>
+                    <div className='buttonContainer'>
                         <button onClick={isEditing ? handleSave : handleEdit}>
                             {isEditing ? 'Ok' : 'Edit'}
                         </button>
