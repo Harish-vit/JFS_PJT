@@ -98,7 +98,7 @@ function FitnessForm({ initialData, onSubmit, token, isEdit }) {
                         type="date"
                         value={date}
                         onChange={handleDateChange}
-                        max={new Date().toISOString().substring(0, 10)} // Set max attribute to today's date
+                        max={new Date().toISOString().substring(0, 10)} // Sets max attribute to today's date
                     />
                     <span>
                         <button type="submit" className='SubmitButton'>{isEdit ? 'Update' : 'Submit'}</button>

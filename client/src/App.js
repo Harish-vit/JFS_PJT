@@ -13,14 +13,12 @@ function App() {
     const [token, setToken] = useState(localStorage.getItem('token')); // Retrieve token from localStorage
     const [isLoggedIn, setIsLoggedIn] = useState(!!token); // Check if token exists
 
-    // Function to handle login and set token
     const handleLogin = (token) => {
         setToken(token);
         setIsLoggedIn(true);
         localStorage.setItem('token', token); // Store token in localStorage
     };
 
-    // Function to handle logout
     const handleLogout = () => {
         localStorage.removeItem('token'); // Remove token from localStorage
         setToken(null);

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import './Login.css';
 
-const Login = ({ setToken }) => { // Accept setToken as a prop
+const Login = ({ setToken }) => {
     const navigate = useNavigate();
     const [user, setUser] = useState({ username: '', password: '' });
 
@@ -20,7 +20,7 @@ const Login = ({ setToken }) => { // Accept setToken as a prop
     const login = async () => {
         try {
             const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/users/login`, user);
-            setToken(response.data.token); // Set the token in the App state
+            setToken(response.data.token); // Sets the token in the App state
             navigate('/history');
         } catch (error) {
             console.error('Login failed:', error.message);

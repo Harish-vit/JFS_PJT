@@ -8,8 +8,8 @@ function Layout({ children, onLogout }) {
 
     const handleSignOut = () => {
         localStorage.removeItem('token'); // Remove token from localStorage
-        onLogout(); // Call the logout handler passed from App.js
-        navigate('/'); // Redirect to login page
+        onLogout();
+        navigate('/');
     };
 
     const handleProfile = () => {

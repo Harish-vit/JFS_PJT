@@ -5,7 +5,6 @@ const User = require('../Models/UserModels');
 
 const userRoute = express.Router();
 
-// JWT secret
 const JWT_SECRET = 'your_jwt_secret_key';
 
 // Middleware to authenticate JWT token
@@ -133,7 +132,6 @@ userRoute.post('/addactivities', authenticateToken, async (req, res) => {
             return res.status(400).json({ message: 'Invalid intensity' });
         }
 
-        // Create new activity
         const newActivity = {
             duration,
             intensity,
@@ -151,7 +149,7 @@ userRoute.post('/addactivities', authenticateToken, async (req, res) => {
     }
 });
 
-// Get single activity by ID
+// Get activity by ID
 userRoute.get('/activities/:id', authenticateToken, async (req, res) => {
     const activityId = req.params.id;
 
@@ -193,7 +191,6 @@ userRoute.put('/activities/:id', authenticateToken, async (req, res) => {
             return res.status(404).json({ message: 'Activity not found' });
         }
 
-        // Update activity fields
         activityToUpdate.duration = duration;
         activityToUpdate.intensity = intensity;
         activityToUpdate.activityName = activityName;
@@ -206,16 +203,14 @@ userRoute.put('/activities/:id', authenticateToken, async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+// Get the user details
 userRoute.get('/details', authenticateToken, async (req, res) => {
     try {
-        // Find the user by their ID, which was decoded from the JWT token
         const user = await User.findById(req.user.id).select('-password -activities'); // Exclude password and activities
-
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-
-        // Respond with user details
         res.json(user);
     } catch (error) {
         console.error('Error fetching user details:', error.message);
@@ -266,59 +261,6 @@ userRoute.put('/details', authenticateToken, async (req, res) => {
         res.json(user);
     } catch (error) {
         console.error('Error updating user details:', error.message);
-        res.status(500).json({ message: 'Server error' });
-    }
-});
-
-userRoute.post('/activities/:id', authenticateToken, async (req, res) => {
-    const { duration, intensity, activityName, date } = req.body;
-    const activityId = req.params.id;
-
-    try {
-        const user = await User.findById(req.user.id);
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        let activityToUpdate = user.activities.id(activityId);
-
-        if (!activityToUpdate) {
-            // If activity does not exist, create a new one
-            activityToUpdate = {
-                duration,
-                intensity,
-                activityName,
-                date
-            };
-            user.activities.push(activityToUpdate);
-        } else {
-            // If activity exists, update it
-            activityToUpdate.duration = duration;
-            activityToUpdate.intensity = intensity;
-            activityToUpdate.activityName = activityName;
-            activityToUpdate.date = date;
-        }
-
-        await user.save();
-
-        res.json({ message: 'Activity saved successfully', activity: activityToUpdate });
-    } catch (error) {
-        console.error('Error saving activity:', error.message);
-        res.status(500).json({ message: 'Server error' });
-    }
-});
-userRoute.get('/details', authenticateToken, async (req, res) => {
-    try {
-        const user = await User.findById(req.user.id).select('-password'); // Exclude password from response
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        res.json(user);
-    } catch (error) {
-        console.error('Error fetching user details:', error.message);
         res.status(500).json({ message: 'Server error' });
     }
 });

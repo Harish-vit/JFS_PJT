@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import FitnessForm from './FitnessForm'; // Assuming you have a FitnessForm component for editing
+import FitnessForm from './FitnessForm';
 
 function EditActivity({ token }) {
     const { id } = useParams(); // Get the activity ID from the URL params
